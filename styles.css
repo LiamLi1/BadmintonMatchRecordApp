@@ -1,0 +1,649 @@
+:root {
+  --bg-1: #f7f4ea;
+  --bg-2: #e7efe0;
+  --card: rgba(255, 255, 255, 0.9);
+  --ink: #1d2a24;
+  --muted: #506157;
+  --primary: #c85f3d;
+  --primary-press: #ad4e31;
+  --secondary: #2f6f5b;
+  --secondary-press: #245748;
+  --tertiary: #d9e2d2;
+  --tertiary-press: #c9d4c1;
+  --line: rgba(29, 42, 36, 0.15);
+  --warning: #8f2f2f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 10% 10%, rgba(200, 95, 61, 0.18), transparent 35%),
+    radial-gradient(circle at 90% 85%, rgba(47, 111, 91, 0.2), transparent 40%),
+    linear-gradient(140deg, var(--bg-1), var(--bg-2));
+  touch-action: manipulation;
+}
+
+.app-shell {
+  width: min(980px, 100% - 24px);
+  margin: 16px auto 28px;
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  letter-spacing: 0.03em;
+}
+
+.app-header p {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+body.match-active .app-header {
+  display: none;
+}
+
+.card {
+  background: var(--card);
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 14px 32px rgba(20, 34, 28, 0.12);
+  padding: 18px;
+}
+
+.setup-card h2,
+.score-header h2 {
+  margin-top: 0;
+}
+
+.setup-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.setup-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  gap: 8px;
+}
+
+input {
+  appearance: none;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 1rem;
+  background: #fff;
+}
+
+input:focus {
+  outline: 3px solid rgba(200, 95, 61, 0.25);
+  border-color: var(--primary);
+}
+
+.btn {
+  border: none;
+  border-radius: 14px;
+  padding: 12px 16px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 50px;
+  transition: transform 0.08s ease, background 0.12s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn.primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn.primary:active {
+  background: var(--primary-press);
+}
+
+.btn.secondary {
+  background: var(--secondary);
+  color: #fff;
+}
+
+.btn.secondary:active {
+  background: var(--secondary-press);
+}
+
+.btn.tertiary {
+  background: var(--tertiary);
+  color: var(--ink);
+}
+
+.btn.tertiary:active {
+  background: var(--tertiary-press);
+}
+
+.btn.large {
+  grid-column: 1 / -1;
+  font-size: 1.08rem;
+}
+
+.setup-form .form-full {
+  grid-column: 1 / -1;
+}
+
+.btn.compact {
+  min-height: 40px;
+  padding: 8px 12px;
+  font-size: 0.88rem;
+  border-radius: 11px;
+}
+
+.hidden {
+  display: none;
+}
+
+.setup-extra-actions {
+  margin-top: 10px;
+}
+
+.setup-extra-actions .btn {
+  width: 100%;
+}
+
+.score-card {
+  display: grid;
+  gap: 14px;
+}
+
+.score-header p {
+  color: var(--muted);
+  margin: 6px 0 0;
+}
+
+body.match-active .score-header h2 {
+  font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+  margin-bottom: 0;
+}
+
+body.match-active #matchMeta {
+  font-size: clamp(0.7rem, 1.45vw, 0.86rem);
+  line-height: 1.25;
+  margin-top: 2px;
+}
+
+body.match-active .score-card {
+  gap: 10px;
+}
+
+.landscape-hint {
+  margin-top: 8px;
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(47, 111, 91, 0.15);
+  color: #20473b;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.teams-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.team-panel {
+  border: none;
+  border-radius: 14px;
+  padding: 14px;
+  color: #ffffff;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+
+.team-panel[data-team="A"] {
+  background:
+    radial-gradient(circle at 20% 18%, rgba(255, 255, 255, 0.16), transparent 42%),
+    linear-gradient(150deg, #0f5ed8, #053492);
+}
+
+.team-panel[data-team="B"] {
+  background:
+    radial-gradient(circle at 20% 18%, rgba(255, 255, 255, 0.15), transparent 42%),
+    linear-gradient(150deg, #d93434, #8f1212);
+}
+
+.team-panel h3 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+.point-number {
+  font-size: clamp(2.6rem, 8vw, 4.6rem);
+  line-height: 1;
+  font-weight: 800;
+  margin-bottom: 12px;
+  color: #ffffff;
+}
+
+.panel-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.score-btn {
+  font-size: clamp(1rem, 2.2vw, 1.28rem);
+  min-height: 64px;
+}
+
+.game-wins {
+  margin: 12px 0 0;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.status-row {
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+}
+
+#statusText {
+  margin: 0;
+  font-weight: 700;
+}
+
+#statusText.alert {
+  color: var(--warning);
+}
+
+.controls-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: start;
+}
+
+.tool-drawer {
+  min-width: 128px;
+}
+
+.tool-drawer summary {
+  list-style: none;
+}
+
+.tool-drawer summary::-webkit-details-marker {
+  display: none;
+}
+
+.tool-toggle {
+  width: 100%;
+  min-height: 50px;
+}
+
+.tool-drawer-content {
+  margin-top: 8px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.78);
+  display: grid;
+  gap: 8px;
+}
+
+.undo-meta {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.privacy-note {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 760px) {
+  .setup-form,
+  .teams-grid,
+  .controls-row {
+    grid-template-columns: 1fr;
+  }
+
+  .app-shell {
+    width: min(100% - 14px, 980px);
+    margin-top: 10px;
+  }
+
+  .card {
+    padding: 14px;
+    border-radius: 14px;
+  }
+}
+
+/* Tablet-first tuning: emphasize score without reducing tap comfort. */
+@media (min-width: 761px) and (max-width: 1180px) {
+  .app-shell {
+    width: min(100% - 20px, 1100px);
+  }
+
+  .score-card {
+    gap: 16px;
+  }
+
+  .teams-grid {
+    gap: 16px;
+  }
+
+  .team-panel {
+    padding: 18px;
+  }
+
+  .team-panel h3 {
+    font-size: 1.35rem;
+  }
+
+  .point-number {
+    font-size: clamp(4.8rem, 11vw, 7.2rem);
+    margin-bottom: 14px;
+  }
+
+  .score-btn {
+    min-height: 72px;
+    font-size: clamp(1.08rem, 2.2vw, 1.34rem);
+  }
+
+  .game-wins {
+    font-size: 1.05rem;
+  }
+
+  #statusText {
+    font-size: 1.12rem;
+  }
+}
+
+/* Phone landscape big-score mode. */
+body.landscape-score-mode .app-header {
+  display: none;
+}
+
+body.landscape-score-mode .app-shell {
+  width: min(100% - 10px, 1200px);
+  margin: 6px auto;
+}
+
+body.landscape-score-mode .score-card {
+  padding: 10px;
+  gap: 8px;
+}
+
+body.landscape-score-mode .score-header h2 {
+  margin-bottom: 2px;
+  font-size: 1.1rem;
+}
+
+body.landscape-score-mode #matchMeta {
+  font-size: 0.84rem;
+  margin-top: 2px;
+}
+
+body.landscape-score-mode .teams-grid {
+  gap: 8px;
+}
+
+body.landscape-score-mode .team-panel {
+  padding: 10px;
+}
+
+body.landscape-score-mode .team-panel h3 {
+  margin-bottom: 4px;
+}
+
+body.landscape-score-mode .point-number {
+  font-size: clamp(4.8rem, 17vw, 8.6rem);
+  margin-bottom: 8px;
+}
+
+body.landscape-score-mode .panel-actions {
+  gap: 8px;
+}
+
+body.landscape-score-mode .score-btn {
+  min-height: 58px;
+  font-size: 1.1rem;
+}
+
+body.landscape-score-mode .game-wins {
+  margin-top: 8px;
+  font-size: 0.95rem;
+}
+
+body.landscape-score-mode .status-row {
+  padding-top: 6px;
+}
+
+body.landscape-score-mode #statusText {
+  font-size: 0.95rem;
+}
+
+body.landscape-score-mode .controls-row {
+  gap: 8px;
+}
+
+body.landscape-score-mode .controls-row .btn {
+  min-height: 46px;
+}
+
+body.landscape-score-mode .privacy-note {
+  display: none;
+}
+
+@media (orientation: landscape) and (max-height: 560px) and (max-width: 980px) {
+  body.match-active {
+    overflow: hidden;
+  }
+}
+
+/* ============================
+   Card Pool Setup
+   ============================ */
+.cards-setup-section {
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.cards-setup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.cards-setup-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.no-cards-hint {
+  color: var(--muted);
+  font-size: 0.88rem;
+  margin: 4px 0;
+}
+
+.cards-list {
+  display: grid;
+  gap: 8px;
+}
+
+.card-entry {
+  display: grid;
+  gap: 6px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.card-entry:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.card-text-input {
+  width: 100%;
+}
+
+.card-entry-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-duration-wrap {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.card-duration-input {
+  width: 60px;
+  padding: 6px 8px;
+}
+
+/* ============================
+   Active Card Display (in team panel)
+   ============================ */
+.active-card-wrap {
+  margin-bottom: 10px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 10px;
+  padding: 8px 10px;
+}
+
+.active-card-text {
+  margin: 0 0 3px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+}
+
+.active-card-timer {
+  margin: 0;
+  font-size: 0.76rem;
+  color: rgba(255, 255, 255, 0.78);
+  font-weight: 600;
+}
+
+/* ============================
+   Draw Button
+   ============================ */
+.draw-btn {
+  min-height: 38px;
+  padding: 6px 10px;
+  font-size: 0.82rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+}
+
+.draw-btn:active {
+  background: rgba(255, 255, 255, 0.38);
+}
+
+/* ============================
+   Toast Notifications
+   ============================ */
+.toast-container {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  pointer-events: none;
+}
+
+.toast {
+  background: #1d2a24;
+  color: #fff;
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  max-width: min(320px, 90vw);
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.28);
+  animation: toast-in 0.28s ease;
+}
+
+.toast.toast-hide {
+  animation: toast-out 0.38s ease forwards;
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes toast-out {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-10px); }
+}
+
+body.match-active {
+  overflow: hidden;
+}
+
+body.match-active .app-shell {
+  width: 100%;
+  margin: 0;
+  min-height: 100dvh;
+}
+
+body.match-active .score-card {
+  min-height: 100dvh;
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  padding: 10px 12px 14px;
+  overflow: auto;
+}

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>羽毛球百分大战计分板</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="app-header">
+      <h1>羽毛球百分大战</h1>
+      <p>实时计分 · 单机运行 · 不保存历史</p>
+    </header>
+
+    <section id="setupCard" class="card setup-card">
+      <h2>开局设置</h2>
+      <form id="setupForm" class="setup-form">
+        <label>
+          每局目标分（X）
+          <input id="targetPoints" type="number" min="1" max="999" value="21" required>
+        </label>
+
+        <label>
+          总局数
+          <input id="totalGames" type="number" min="1" max="99" value="3" required>
+        </label>
+
+        <label>
+          A队名称
+          <input id="teamAName" type="text" maxlength="20" value="A队">
+        </label>
+
+        <label>
+          B队名称
+          <input id="teamBName" type="text" maxlength="20" value="B队">
+        </label>
+
+        <label class="form-full">
+          每队抽卡次数
+          <input id="drawsPerTeam" type="number" min="0" max="99" value="3">
+        </label>
+
+        <button type="submit" class="btn primary large">开始比赛</button>
+      </form>
+      <div class="cards-setup-section">
+        <div class="cards-setup-header">
+          <span class="cards-setup-title">比赛条款（抽卡池）</span>
+          <button id="addCardBtn" type="button" class="btn tertiary compact">＋ 添加条款</button>
+        </div>
+        <div id="cardsList" class="cards-list">
+          <p class="no-cards-hint">暂无条款，点击「添加条款」开始设置</p>
+        </div>
+      </div>
+
+      <div class="setup-extra-actions">
+        <button id="recoverMatchBtn" type="button" class="btn tertiary hidden" disabled>恢复比赛</button>
+      </div>
+    </section>
+
+    <section id="scoreCard" class="card score-card hidden" aria-live="polite">
+      <div class="score-header">
+        <h2 id="matchTitle">比赛进行中</h2>
+        <p id="matchMeta"></p>
+      </div>
+
+      <div class="teams-grid">
+        <article class="team-panel" data-team="A">
+          <h3 id="teamALabel">A队</h3>
+          <div class="point-number" id="teamAPoints">0</div>
+          <div class="active-card-wrap hidden" id="teamACardWrap">
+            <p class="active-card-text" id="teamACardText"></p>
+            <p class="active-card-timer" id="teamACardTimer"></p>
+          </div>
+          <div class="panel-actions">
+            <button class="btn primary score-btn" data-action="add" data-team="A">+1 分</button>
+            <button type="button" class="btn draw-btn hidden" id="drawBtnA" data-team="A">抽卡</button>
+          </div>
+          <p class="game-wins">已赢局数：<span id="teamAWins">0</span></p>
+        </article>
+
+        <article class="team-panel" data-team="B">
+          <h3 id="teamBLabel">B队</h3>
+          <div class="point-number" id="teamBPoints">0</div>
+          <div class="active-card-wrap hidden" id="teamBCardWrap">
+            <p class="active-card-text" id="teamBCardText"></p>
+            <p class="active-card-timer" id="teamBCardTimer"></p>
+          </div>
+          <div class="panel-actions">
+            <button class="btn primary score-btn" data-action="add" data-team="B">+1 分</button>
+            <button type="button" class="btn draw-btn hidden" id="drawBtnB" data-team="B">抽卡</button>
+          </div>
+          <p class="game-wins">已赢局数：<span id="teamBWins">0</span></p>
+        </article>
+      </div>
+
+      <div class="status-row">
+        <p id="statusText">等待本局胜者出现</p>
+      </div>
+
+      <div class="controls-row">
+        <button id="newRoundBtn" class="btn tertiary" disabled>开始下一局</button>
+        <details class="tool-drawer">
+          <summary class="btn tertiary tool-toggle">功能栏</summary>
+          <div class="tool-drawer-content">
+            <button id="undoBtn" class="btn tertiary" disabled>回撤</button>
+            <p id="undoMeta" class="undo-meta">回撤步数：0 / 5</p>
+            <button id="resetMatchBtn" class="btn tertiary compact">重置比赛</button>
+          </div>
+        </details>
+      </div>
+
+      <p class="privacy-note">隐私说明：本页面不保存任何历史战绩，关闭网页后数据即清空。</p>
+    </section>
+  </main>
+
+  <div id="toastContainer" class="toast-container"></div>
+  <script src="app.js"></script>
+</body>
+</html>
