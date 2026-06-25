@@ -18,7 +18,7 @@
       <form id="setupForm" class="setup-form">
         <label>
           每局目标分（X）
-          <input id="targetPoints" type="number" min="1" max="999" value="21" required>
+          <input id="targetPoints" type="number" min="1" max="999" value="101" required>
         </label>
 
         <label>
@@ -27,18 +27,23 @@
         </label>
 
         <label>
-          A队名称
-          <input id="teamAName" type="text" maxlength="20" value="A队">
+          蓝队名称
+          <input id="teamAName" type="text" maxlength="20" value="蓝队">
         </label>
 
         <label>
-          B队名称
-          <input id="teamBName" type="text" maxlength="20" value="B队">
+          红队名称
+          <input id="teamBName" type="text" maxlength="20" value="红队">
         </label>
 
         <label class="form-full">
           每队抽卡次数
-          <input id="drawsPerTeam" type="number" min="0" max="99" value="3">
+          <input id="drawsPerTeam" type="number" min="0" max="99" value="10">
+        </label>
+
+        <label class="form-full">
+          <input id="enableComebackDrawRule" type="checkbox" checked>
+          启用「逆风抽卡规则」（落后队在关键时刻自动获得抽卡机会）
         </label>
 
         <button type="submit" class="btn primary large">开始比赛</button>
@@ -54,6 +59,7 @@
       </div>
 
       <div class="setup-extra-actions">
+        <p id="recoverMatchHint" class="hidden">比赛进行中，可恢复继续</p>
         <button id="recoverMatchBtn" type="button" class="btn tertiary hidden" disabled>恢复比赛</button>
       </div>
     </section>
@@ -66,7 +72,7 @@
 
       <div class="teams-grid">
         <article class="team-panel" data-team="A">
-          <h3 id="teamALabel">A队</h3>
+          <h3 id="teamALabel">红队</h3>
           <div class="point-number" id="teamAPoints">0</div>
           <div class="active-card-wrap hidden" id="teamACardWrap">
             <p class="active-card-text" id="teamACardText"></p>
@@ -80,7 +86,7 @@
         </article>
 
         <article class="team-panel" data-team="B">
-          <h3 id="teamBLabel">B队</h3>
+          <h3 id="teamBLabel">蓝队</h3>
           <div class="point-number" id="teamBPoints">0</div>
           <div class="active-card-wrap hidden" id="teamBCardWrap">
             <p class="active-card-text" id="teamBCardText"></p>
@@ -110,9 +116,43 @@
         </details>
       </div>
 
+      <section class="available-cards-panel" aria-live="polite">
+        <h3>本局可抽卡牌</h3>
+        <p id="availableCardsEmpty" class="available-cards-empty hidden">当前未配置可抽条款</p>
+        <ul id="availableCardsList" class="available-cards-list"></ul>
+      </section>
+
       <p class="privacy-note">隐私说明：本页面不保存任何历史战绩，关闭网页后数据即清空。</p>
     </section>
   </main>
+
+  <div id="swapPromptModal" class="swap-prompt-modal hidden" role="dialog" aria-modal="true" aria-labelledby="swapPromptTitle">
+    <div class="swap-prompt-content">
+      <h2 id="swapPromptTitle">换人提示</h2>
+      <p>任意一队已到 10 分，请先换人后继续比赛。</p>
+      <button id="swapPromptContinueBtn" type="button" class="btn primary">继续比赛</button>
+    </div>
+  </div>
+
+  <div id="comebackDrawModal" class="swap-prompt-modal hidden" role="dialog" aria-modal="true" aria-labelledby="comebackDrawTitle">
+    <div class="swap-prompt-content">
+      <h2 id="comebackDrawTitle">逆风抽卡！</h2>
+      <p id="comebackDrawMsg"></p>
+      <button id="comebackDrawContinueBtn" type="button" class="btn primary">继续比赛</button>
+    </div>
+  </div>
+
+  <div id="drawModal" class="draw-modal hidden" role="dialog" aria-modal="true" aria-labelledby="drawModalTitle">
+    <div class="draw-modal-content">
+      <h2 id="drawModalTitle">正在抽卡...</h2>
+      <div id="drawDeck" class="draw-deck" aria-hidden="true"></div>
+      <div id="drawResultCard" class="draw-result-card hidden">
+        <h3 id="drawResultTitle"></h3>
+        <p id="drawResultMeta"></p>
+      </div>
+      <button id="drawContinueBtn" type="button" class="btn primary" disabled>继续比赛</button>
+    </div>
+  </div>
 
   <div id="toastContainer" class="toast-container"></div>
   <script src="app.js"></script>
