@@ -385,6 +385,7 @@ const DEFAULT_CARDS = [
   { text: "软绵绵卡：对方不能杀球，软压也不行", durationBalls: 5, bonusPoints: 0 },
   { text: "连续发球卡：无论上一轮哪方得分，我方连续发球", durationBalls: 5, bonusPoints: 0 },
   { text: "加人卡：我方任意选择加1人上场，3打2", durationBalls: 5, bonusPoints: 0 },
+  { text: "换人卡：本队可强制执行一次特殊换人（不受10分限制），提供两个换人选项：1）本队换任意一名球员上场；2）指定对方队任意一名球员两个换人轮回内不能上场（被ban的人在排到两个换人轮回后上场）", durationBalls: 1, bonusPoints: 0 },
   { text: "发后场封印卡：对方发球只能发前场，不能发后场", durationBalls: 5, bonusPoints: 0 },
   { text: "发前场封印卡：对方发球只能发后场，不能发前场", durationBalls: 5, bonusPoints: 0 },
   { text: "明牌卡：对方击球前必须大声说出球路（高远/杀/吊/放/勾/扑/抽/挡），被抽或杀球时除外", durationBalls: 5, bonusPoints: 0 },
@@ -423,13 +424,17 @@ function addCardEntry(preset = {}) {
   }
 
   const textVal = preset.text ?? "";
+  const escapedText = textVal
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
   const durationVal = preset.durationBalls ?? 5;
   const bonusVal = preset.bonusPoints ?? 0;
 
   const entry = document.createElement("div");
   entry.className = "card-entry";
   entry.innerHTML = [
-    `<input type="text" class="card-text-input" placeholder="条款内容（如：下一球必须用反手）" maxlength="80" value="${textVal.replace(/"/g, '&quot;')}">`,
+    `<textarea class="card-text-input" placeholder="条款内容（如：下一球必须用反手）" maxlength="80" rows="2">${escapedText}</textarea>`,
     '<div class="card-entry-meta">',
     `  <span class="card-duration-wrap">持续 <input type="number" class="card-duration-input" min="1" max="999" value="${durationVal}"> 球</span>`,
     `  <span class="card-bonus-wrap">加 <input type="number" class="card-bonus-input" min="0" max="99" value="${bonusVal}"> 分</span>`,

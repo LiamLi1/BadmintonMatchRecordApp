@@ -88,16 +88,19 @@ body.match-active .app-header {
   gap: 8px;
 }
 
-input {
+input,
+textarea {
   appearance: none;
   border: 1px solid var(--line);
   border-radius: 12px;
   padding: 12px;
   font-size: 1rem;
+  font-family: inherit;
   background: #fff;
 }
 
-input:focus {
+input:focus,
+textarea:focus {
   outline: 3px solid rgba(200, 95, 61, 0.25);
   border-color: var(--primary);
 }
@@ -578,6 +581,9 @@ body.landscape-score-mode .privacy-note {
 
 .card-text-input {
   width: 100%;
+  min-height: 56px;
+  line-height: 1.35;
+  resize: vertical;
 }
 
 .card-entry-meta {
