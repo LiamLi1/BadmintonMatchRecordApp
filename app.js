@@ -113,7 +113,7 @@ function showComebackDrawModal(team) {
 
   const teamName = team === "A" ? state.config.teamAName : state.config.teamBName;
   const otherTeam = team === "A" ? "B" : "A";
-  comebackDrawMsg.textContent = `关键时刻！${teamName} 获得一次额外抽卡机会！`;
+  comebackDrawMsg.textContent = `关键时刻！${teamName} 因为落后超过10分获得一次额外抽卡机会！`;
   comebackDrawModal.classList.remove("hidden");
 }
 
@@ -136,12 +136,12 @@ function checkComebackDrawRule() {
   const diffToWinB = targetPts - ptsB;
 
   let triggerTeam = null;
-  // A队接近获胜（差≤11分），B队严重落后（分差≥10分）-> 给B队（落后队）抽卡
-  if (diffToWinA <= 11 && diffToWinA > 0 && ptsB < ptsA && (ptsA - ptsB) >= 10) {
+  // A队分数为 targetPoints - 10（差10分），B队分差≤10分 -> 给B队（落后队）抽卡
+  if (ptsA === targetPts - 10 && ptsB < ptsA && (ptsA - ptsB) >= 10) {
     triggerTeam = "B";
   }
-  // B队接近获胜（差≤11分），A队严重落后（分差≥10分）-> 给A队（落后队）抽卡
-  else if (diffToWinB <= 11 && diffToWinB > 0 && ptsA < ptsB && (ptsB - ptsA) >= 10) {
+  // B队分数为 targetPoints - 10（差10分），A队分差≤10分 -> 给A队（落后队）抽卡
+  else if (ptsB === targetPts - 10 && ptsA < ptsB && (ptsB - ptsA) >= 10) {
     triggerTeam = "A";
   }
 
@@ -282,7 +282,7 @@ function acknowledgeSwapPrompt() {
 }
 
 function checkSwapPromptTrigger() {
-  if (!state) {
+  if (!state || state.gameLocked) {
     return;
   }
 
